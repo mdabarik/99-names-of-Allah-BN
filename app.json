@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "99NamesOfAllah",
-    "slug": "99NamesOfAllah",
-    "version": "1.0.0",
+    "name": "আল্লাহর ৯৯ টি নাম",
+    "slug": "99-names-of-allah",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "99namesofallah",
@@ -12,6 +12,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.nameofallahbn",
+      "versionCode": 4,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
