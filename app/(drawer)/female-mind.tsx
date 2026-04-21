@@ -1,11 +1,13 @@
-import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import YoutubeIframe from 'react-native-youtube-iframe';
-import * as Linking from 'expo-linking';
 import { FontAwesome5 } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
+import React, { useCallback, useState } from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import YoutubeIframe from 'react-native-youtube-iframe';
 
 export default function FemaleMindScreen() {
   const [playing, setPlaying] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const onStateChange = useCallback((state: string) => {
     if (state === 'ended') {
@@ -47,7 +49,7 @@ export default function FemaleMindScreen() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.actionContainer}>
+      <View style={[styles.actionContainer, { paddingBottom: 40 + insets.bottom }]}>
         <Text style={styles.actionText}>Want to explore the complete series?</Text>
         <TouchableOpacity style={styles.playlistButton} onPress={openPlaylist} activeOpacity={0.8}>
           <FontAwesome5 name="external-link-alt" size={16} color="#FFF" style={styles.buttonIcon} />

@@ -1,6 +1,6 @@
 import { Drawer } from 'expo-router/drawer';
 import React from 'react';
-import { View, Text, StyleSheet, BackHandler, Platform, Linking } from 'react-native';
+import { View, Text, StyleSheet, BackHandler, Platform, Linking, TouchableOpacity } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -86,7 +86,7 @@ import { StatusBar as RNStatusBar } from 'react-native';
 export default function DrawerLayout() {
   React.useEffect(() => {
     if (Platform.OS === 'android') {
-      RNStatusBar.setBackgroundColor('#C53812');
+      RNStatusBar.setBackgroundColor('#E84C22');
       RNStatusBar.setBarStyle('light-content');
     }
   }, []);
@@ -99,6 +99,14 @@ export default function DrawerLayout() {
           headerShown: true,
           headerStyle: { backgroundColor: COLORS.primary },
           headerTintColor: '#fff',
+          headerRight: () => (
+            <TouchableOpacity 
+              onPress={() => Linking.openURL('https://www.youtube.com/channel/UCsQvox_DAmM8g027TnCNslA?sub_confirmation=1')}
+              style={{ marginRight: 15 }}
+            >
+              <FontAwesome5 name="youtube" size={24} color="#fff" />
+            </TouchableOpacity>
+          ),
           drawerStyle: { backgroundColor: COLORS.primary },
           drawerActiveTintColor: '#fff',
           drawerInactiveTintColor: '#fff',

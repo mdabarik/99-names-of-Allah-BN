@@ -2,19 +2,20 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import * as Linking from 'expo-linking';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function YoutubeChannelScreen() {
-  
+  const insets = useSafeAreaInsets();
   // NOTE: Exact Channel ID
   const CHANNEL_ID = 'UCsQvox_DAmM8g027TnCNslA'; 
 
   const openChannel = () => {
-    // Adding ?sub_confirmation=1 automatically prompts the user to subscribe when they open the link!
-    Linking.openURL(`https://www.youtube.com/channel/${CHANNEL_ID}?sub_confirmation=1`);
+    // Correct Subscription Link
+    Linking.openURL('https://www.youtube.com/channel/UCsQvox_DAmM8g027TnCNslA?sub_confirmation=1');
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, { paddingBottom: 25 + insets.bottom }]}>
       
       <View style={styles.iconContainer}>
         <FontAwesome5 name="youtube" size={80} color="#FF0000" />

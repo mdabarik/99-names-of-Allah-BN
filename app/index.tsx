@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 export default function SplashScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -23,6 +24,7 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="light" backgroundColor="#E84C22" translucent={true} />
       <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
         {/* Large Arabic text */}
         <Text style={styles.arabic}>الله</Text>
@@ -42,7 +44,7 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EA4A22',
+    backgroundColor: '#E84C22',
     justifyContent: 'center',
     alignItems: 'center',
   },

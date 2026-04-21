@@ -1,8 +1,10 @@
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function AboutScreen() {
+  const insets = useSafeAreaInsets();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileContainer}>
@@ -11,7 +13,7 @@ export default function AboutScreen() {
       
       <Text style={styles.headerTitle}>ABOUT DEVELOPER</Text>
       
-      <View style={styles.textContainer}>
+      <View style={[styles.textContainer, { paddingBottom: 40 + insets.bottom }]}>
         <Text style={styles.bioText}>
           আসসালামু আলাইকুম ওয়া রহমাতুল্লাহি ওয়া বারাকাতুহু। সকল প্রশংসা মহিয়ান গরিয়ান আল্লাহ্‌ তায়ালার জন্য। আল্লাহর অশেষ মেহেরবানী তে এই অ্যাপটি তৈরি করতে পারলাম। আমি গোপালগঞ্জ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় এর একজন ছাত্র। আল্লাহর ৯৯ টি নাম দিয়ে তৈরী করলাম প্রথম ইসলামিক অ্যাপ। এবং এটিই আমার প্লে স্টোরে পাবলিশ করা প্রথম অ্যাপ। আমার একটি প্রোগ্রামিং ইউটিউব চ্যানেল আছে এবং আমার আরেক টি ইউটিউব চ্যানেল আছে যেখানে আমি ইসলামিক ভিডিও বানাই।
         </Text>

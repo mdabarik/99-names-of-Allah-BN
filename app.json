@@ -2,7 +2,7 @@
   "expo": {
     "name": "আল্লাহর ৯৯ টি নাম",
     "slug": "99-names-of-allah",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "99namesofallah",
@@ -13,12 +13,12 @@
     },
     "android": {
       "package": "com.techbarik.allah99names",
-      "versionCode": 2,
+      "versionCode": 8,
       "adaptiveIcon": {
         "backgroundColor": "#E84C22",
         "foregroundImage": "./assets/images/icon.png"
       },
-      "edgeToEdgeEnabled": false,
+      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -37,6 +37,13 @@
             "backgroundColor": "#E84C22"
           }
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-9082337666591788~3761917119",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
       ]
     ],
     "experiments": {
@@ -46,7 +53,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "78754afd-e54a-44b9-92c2-cafd33997fee"
+        "projectId": "e8917fc7-6e8d-451f-91ce-22d84e545370"
       }
     }
   }

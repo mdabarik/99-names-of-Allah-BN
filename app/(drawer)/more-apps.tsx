@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function MoreAppsScreen() {
+  const insets = useSafeAreaInsets();
   const handleOpenPlayStore = () => {
     Linking.openURL('https://play.google.com/store/apps/developer?id=TechBarik');
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingBottom: 24 + insets.bottom }]}>
       <View style={styles.contentContainer}>
         <View style={styles.iconContainer}>
           <FontAwesome5 name="google-play" size={60} color="#E84C22" />

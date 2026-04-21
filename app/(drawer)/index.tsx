@@ -1,13 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, BackHandler } from 'react-native';
 import { Audio } from 'expo-av';
 import { FontAwesome5 } from '@expo/vector-icons';
 import namesData from '../../assets/data/asmaul_husna.json';
 import { audioMap } from '../../constants/AudioMap';
+import AdBanner from '../../components/AdBanner';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SubscribeModal from '../../components/SubscribeModal';
+import * as Linking from 'expo-linking';
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const [playingId, setPlayingId] = useState<number | null>(null);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [adVisible, setAdVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    const checkModalStatus = async () => {
+      try {
+        const hasShown = await AsyncStorage.getItem('has_shown_subscribe_modal');
+        if (hasShown === null) {
+          // Show modal after a short delay for better UX
+          setTimeout(() => {
+            setModalVisible(true);
+          }, 1500);
+        }
+      } catch (error) {
+        console.error('Error checking storage', error);
+      }
+    };
+    checkModalStatus();
+  }, []);
+
+  const handleCloseModal = async () => {
+    setModalVisible(false);
+    try {
+      await AsyncStorage.setItem('has_shown_subscribe_modal', 'true');
+    } catch (error) {
+      console.error('Error saving storage', error);
+    }
+  };
+
+  const handleSubscribe = async () => {
+    handleCloseModal();
+    Linking.openURL('https://www.youtube.com/channel/UCsQvox_DAmM8g027TnCNslA?sub_confirmation=1');
+  };
+
+  useEffect(() => {
+    const backAction = () => {
+      // If we are on the Home screen and the drawer is closed, exit the app
+      // This solves the 'two back presses to exit' bug
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   useEffect(() => {
     // Enable audio playback in silent mode
@@ -88,8 +145,32 @@ export default function HomeScreen() {
         data={namesData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={[
+          styles.listContainer,
+          { paddingBottom: (adVisible ? 45 : 20) + insets.bottom }
+        ]}
         showsVerticalScrollIndicator={false}
+        style={styles.list}
+      />
+      
+      {/* Absolute positioned or fixed bottom ad banner */}
+      <View style={[
+        styles.adContainer, 
+        { 
+          borderTopWidth: adVisible ? 1 : 0,
+          paddingBottom: insets.bottom // Ensure ad is above system gesture bar
+        }
+      ]}>
+        <AdBanner 
+          onLoad={() => setAdVisible(true)} 
+          onFail={() => setAdVisible(false)} 
+        />
+      </View>
+
+      <SubscribeModal 
+        visible={modalVisible} 
+        onClose={handleCloseModal} 
+        onSubscribe={handleSubscribe} 
       />
     </View>
   );
@@ -100,9 +181,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F2F2F2',
   },
+  list: {
+    flex: 1,
+  },
+  adContainer: {
+    backgroundColor: '#F2F2F2',
+    borderTopColor: '#DDD',
+  },
   listContainer: {
     padding: 15,
-    paddingBottom: 30,
+    paddingBottom: 20, // Default padding when no ad
+  },
+  listWithAd: {
+    paddingBottom: 80, // Space to ensure the 99th name is above the ad
   },
   card: {
     backgroundColor: '#FAFAFA',
